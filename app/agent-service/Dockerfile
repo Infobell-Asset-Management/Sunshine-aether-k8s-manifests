@@ -8,6 +8,9 @@ RUN set -eux; \
     for i in 1 2 3 4 5; do \
         apt-get install -y \
             curl \
+            procps \
+            iproute2 \
+            net-tools \
         && break || (echo "apt-get failed, retrying in 10s..." && sleep 10); \
     done; \
     rm -rf /var/lib/apt/lists/*
