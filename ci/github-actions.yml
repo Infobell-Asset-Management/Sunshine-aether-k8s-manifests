@@ -1,0 +1,37 @@
+name: Build and Push Processor Image
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'aether-apps/app/processor-service/**'
+      - 'aether-apps/manifests/processor/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Harbor
+        uses: docker/login-action@v3
+        with:
+          registry: 192.168.0.70
+          username: ${{ secrets.HARBOR_USERNAME }}
+          password: ${{ secrets.HARBOR_PASSWORD }}
+
+      - name: Build and Push
+        uses: docker/build-push-action@v6
+        with:
+          context: aether-apps/app/processor-service
+          push: true
+          tags: 192.168.0.70/assettrack/processor:v1.0.0
+
+      - name: Show next steps
+        run: |
+          echo "Commit any manifest updates and ArgoCD will sync."
+

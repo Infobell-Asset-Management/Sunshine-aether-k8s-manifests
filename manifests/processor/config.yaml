@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: processor-config
+  namespace: assettrack
+data:
+  DB_HOST: "postgres.assettrack.svc.cluster.local"
+  DB_PORT: "5432"
+  DB_NAME: "assetdb"
+  MQ_HOST: "rabbitmq.assettrack.svc.cluster.local"
+  MQ_PORT: "5672"
+  LOG_LEVEL: "INFO"
+

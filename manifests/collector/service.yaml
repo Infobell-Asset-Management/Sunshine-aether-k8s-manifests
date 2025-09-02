@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: collector-service
+  namespace: assettrack
+  labels:
+    app: collector-service
+spec:
+  selector:
+    app: collector-service
+  ports:
+  - name: http
+    port: 8000
+    targetPort: 8000
+    protocol: TCP
+  type: ClusterIP
+

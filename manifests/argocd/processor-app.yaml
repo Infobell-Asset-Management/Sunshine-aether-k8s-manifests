@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: processor-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Infobell-Asset-Management/Sunshine-aether-k8s-manifests.git
+    targetRevision: HEAD
+    path: aether-apps/manifests/processor
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: assettrack
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+

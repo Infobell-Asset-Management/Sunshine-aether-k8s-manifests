@@ -1,0 +1,14 @@
+apiVersion: velero.io/v1
+kind: Restore
+metadata:
+  name: assettrack-restore
+  namespace: velero
+spec:
+  backupName: assettrack-backup
+  includedNamespaces:
+  - assettrack
+  restorePVs: true
+  preserveNodePorts: false
+  scheduleName: ""
+  hooks: {}
+

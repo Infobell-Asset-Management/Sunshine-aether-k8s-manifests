@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: agent-service
+  namespace: assettrack
+  labels:
+    app: agent-service
+    linkerd.io/inject: enabled
+spec:
+  selector:
+    matchLabels:
+      app: agent-service
+  template:
+    metadata:
+      labels:
+        app: agent-service
+        linkerd.io/inject: enabled
+    spec:
+      serviceAccountName: agent-service
+      containers:
+      - name: agent-service
+        image: "192.168.0.70/assettrack/agent-service:v1.0.0"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+          name: http
+        env:
+        - name: MQ_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: agent-config
+              key: mq_host
+        - name: MQ_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: agent-config
+              key: mq_port
+        - name: MQ_USER
+          valueFrom:
+            secretKeyRef:
+              name: agent-secrets
+              key: mq_user
+        - name: MQ_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: agent-secrets
+              key: mq_password
+        - name: NODE_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+      securityContext:
+        fsGroup: 1000
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+        effect: NoSchedule
+

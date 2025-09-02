@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dr-test-pod
+  namespace: assettrack
+  labels:
+    app: dr-test
+spec:
+  containers:
+  - name: test-container
+    image: busybox:1.35
+    command: ["sh", "-c", "echo 'DR test pod is running' && sleep 3600"]
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "50m"
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
+  restartPolicy: Never
+

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: processor-service
+  namespace: assettrack
+  labels:
+    app: processor-service
+spec:
+  selector:
+    app: processor-service
+  ports:
+  - name: http
+    port: 8000
+    targetPort: 8000
+    protocol: TCP
+  type: ClusterIP
+

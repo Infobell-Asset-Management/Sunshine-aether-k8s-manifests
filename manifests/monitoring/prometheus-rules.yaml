@@ -1,0 +1,57 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: assettrack-alerts
+  namespace: assettrack
+  labels:
+    prometheus: kube-prometheus
+    role: alert-rules
+spec:
+  groups:
+  - name: assettrack.rules
+    rules:
+    - alert: ProcessorServiceDown
+      expr: up{job="processor-service"} == 0
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Processor service is down"
+        description: "Processor service has been down for more than 1 minute"
+    
+    - alert: CollectorServiceDown
+      expr: up{job="collector-service"} == 0
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Collector service is down"
+        description: "Collector service has been down for more than 1 minute"
+    
+    - alert: APIServiceDown
+      expr: up{job="api-service"} == 0
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: "API service is down"
+        description: "API service has been down for more than 1 minute"
+    
+    - alert: HighErrorRate
+      expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.1
+      for: 2m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High error rate detected"
+        description: "Error rate is above 10% for the last 5 minutes"
+    
+    - alert: HighResponseTime
+      expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+      for: 2m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High response time detected"
+        description: "95th percentile response time is above 2 seconds"
+

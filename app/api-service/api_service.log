@@ -1,0 +1,53 @@
+nohup: ignoring input
+INFO:     Will watch for changes in these directories: ['/home/infobell/assetTrack/aether-apps/app/api-service']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [1497856] using WatchFiles
+INFO:     Started server process [1497859]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:39272 - "GET /healthz HTTP/1.1" 200 OK
+ERROR:app:Error fetching assets: All connection attempts failed
+INFO:     None:0 - "GET /assets HTTP/1.1" 500 Internal Server Error
+ERROR:app:Error fetching assets: All connection attempts failed
+INFO:     None:0 - "GET /assets HTTP/1.1" 500 Internal Server Error
+ERROR:app:Error fetching events: [Errno -3] Temporary failure in name resolution
+INFO:     None:0 - "GET /events HTTP/1.1" 500 Internal Server Error
+ERROR:app:Error fetching events: [Errno -3] Temporary failure in name resolution
+INFO:     None:0 - "GET /events HTTP/1.1" 500 Internal Server Error
+ERROR:app:Error fetching events: [Errno -3] Temporary failure in name resolution
+INFO:     None:0 - "GET /events HTTP/1.1" 500 Internal Server Error
+ERROR:app:Error fetching events: [Errno -3] Temporary failure in name resolution
+INFO:     None:0 - "GET /events HTTP/1.1" 500 Internal Server Error
+ERROR:app:Error fetching assets: All connection attempts failed
+INFO:     None:0 - "GET /assets HTTP/1.1" 500 Internal Server Error
+ERROR:app:Error fetching assets: All connection attempts failed
+INFO:     None:0 - "GET /assets HTTP/1.1" 500 Internal Server Error
+ERROR:app:Error fetching assets: All connection attempts failed
+INFO:     None:0 - "GET /assets HTTP/1.1" 500 Internal Server Error
+ERROR:app:Error fetching assets: All connection attempts failed
+INFO:     None:0 - "GET /assets HTTP/1.1" 500 Internal Server Error
+ERROR:app:Error fetching assets: All connection attempts failed
+INFO:     127.0.0.1:36584 - "GET /assets HTTP/1.1" 500 Internal Server Error
+ERROR:app:Error fetching events: [Errno -3] Temporary failure in name resolution
+INFO:     127.0.0.1:36598 - "GET /events HTTP/1.1" 500 Internal Server Error
+ERROR:app:Error fetching stats: [Errno -3] Temporary failure in name resolution
+INFO:     127.0.0.1:36600 - "GET /stats HTTP/1.1" 500 Internal Server Error
+ERROR:app:Error fetching stats: [Errno -3] Temporary failure in name resolution
+INFO:     127.0.0.1:57926 - "GET /stats HTTP/1.1" 500 Internal Server Error
+ERROR:app:Error fetching events: [Errno -3] Temporary failure in name resolution
+INFO:     127.0.0.1:57930 - "GET /events HTTP/1.1" 500 Internal Server Error
+ERROR:app:Error fetching assets: All connection attempts failed
+INFO:     127.0.0.1:57944 - "GET /assets HTTP/1.1" 500 Internal Server Error
+INFO:httpx:HTTP Request: GET http://localhost:8001/assets?skip=0&limit=100 "HTTP/1.1 404 Not Found"
+INFO:     127.0.0.1:49354 - "GET /assets HTTP/1.1" 404 Not Found
+ERROR:app:Error fetching events: [Errno -3] Temporary failure in name resolution
+INFO:     127.0.0.1:49360 - "GET /events HTTP/1.1" 500 Internal Server Error
+ERROR:app:Error fetching events: [Errno -3] Temporary failure in name resolution
+INFO:     127.0.0.1:40684 - "GET /events HTTP/1.1" 500 Internal Server Error
+ERROR:app:Error fetching assets: 
+INFO:     127.0.0.1:40672 - "GET /assets HTTP/1.1" 500 Internal Server Error
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1497859]
+INFO:     Stopping reloader process [1497856]

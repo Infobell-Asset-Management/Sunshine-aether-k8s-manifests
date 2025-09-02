@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collector-service
+  namespace: assettrack
+  labels:
+    app: collector-service
+    linkerd.io/inject: enabled
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: collector-service
+  template:
+    metadata:
+      labels:
+        app: collector-service
+        linkerd.io/inject: enabled
+    spec:
+      serviceAccountName: collector-service
+      containers:
+      - name: collector-service
+        image: "192.168.0.70/assettrack/collector-service:v1.0.0"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+          name: http
+        env:
+        - name: MQ_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: collector-config
+              key: mq_host
+        - name: MQ_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: collector-config
+              key: mq_port
+        - name: MQ_USER
+          valueFrom:
+            secretKeyRef:
+              name: collector-secrets
+              key: mq_user
+        - name: MQ_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: collector-secrets
+              key: mq_password
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+      securityContext:
+        fsGroup: 1000
+
