@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alertmanager-config
+  namespace: monitoring
+data:
+  alertmanager.yaml: |
+    route:
+      group_by: ['alertname']
+      receiver: 'webhook-notifier'
+    receivers:
+    - name: 'webhook-notifier'
+      webhook_configs:
+      - url: 'http://notification-service.assettrack.svc.cluster.local:8088/alert'
+
+

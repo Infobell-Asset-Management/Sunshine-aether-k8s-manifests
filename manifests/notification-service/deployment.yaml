@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+  namespace: assettrack
+  labels:
+    app: notification-service
+    linkerd.io/inject: enabled
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+        linkerd.io/inject: enabled
+    spec:
+      serviceAccountName: notification-service
+      containers:
+      - name: notification-service
+        image: "192.168.0.70/assettrack/notification-service:v1.0.0"
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: TARGET_NAMESPACE
+          value: "assettrack"
+        - name: TARGET_DEPLOYMENT
+          value: "processor"
+        ports:
+        - containerPort: 8088
+          name: http
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+  namespace: assettrack
+  labels:
+    app: notification-service
+spec:
+  selector:
+    app: notification-service
+  ports:
+  - name: http
+    port: 8088
+    targetPort: 8088
+
+

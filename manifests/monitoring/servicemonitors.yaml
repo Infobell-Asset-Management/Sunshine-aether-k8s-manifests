@@ -1,0 +1,48 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: api-service-sm
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: api-service
+  namespaceSelector:
+    matchNames: ["assettrack"]
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: processor-service-sm
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: processor
+  namespaceSelector:
+    matchNames: ["assettrack"]
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: collector-service-sm
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: collector-service
+  namespaceSelector:
+    matchNames: ["assettrack"]
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s
+

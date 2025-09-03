@@ -139,6 +139,23 @@ services:
     networks:
       - asset_track_network
 
+  # Notification Service (optional for local demo)
+  notification-service:
+    build:
+      context: ../app/notification-service
+      dockerfile: Dockerfile
+    environment:
+      - TARGET_NAMESPACE=assettrack
+      - TARGET_DEPLOYMENT=processor
+    ports:
+      - "8088:8088"
+    depends_on:
+      api-service:
+        condition: service_started
+    restart: unless-stopped
+    networks:
+      - asset_track_network
+
   # Web UI
   webapp-ui:
     build:
